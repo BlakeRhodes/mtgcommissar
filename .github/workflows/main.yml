@@ -12,14 +12,29 @@ jobs:
     - uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+    - name: Use Node 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build
+      run: npm run build:ci
+    
+    - name: Test
+      run: npm run test:ci 
+    
+    - name: npm install and build
+      run: npm
+      
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name mtgcommissar --auth-mode key -d '$web' -s .
+            az storage blob upload-batch --account-name mtgcommissar --auth-mode key -d '$web' -s .    
     
-  # Azure logout
     - name: logout
       run: |
             az logout
