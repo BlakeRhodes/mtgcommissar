@@ -25,10 +25,7 @@ jobs:
     
     - name: Test
       run: npm run test:ci 
-    
-    - name: npm install and build
-      run: npm
-      
+
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
