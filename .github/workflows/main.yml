@@ -19,18 +19,18 @@ jobs:
     
     - name: Install dependencies
       run: npm ci
-    
+
+    - name: Test
+      run: npm run test:ci
+
     - name: Build
       run: npm run build:ci
-    
-    - name: Test
-      run: npm run test:ci 
 
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name mtgcommissar --auth-mode key -d '$web' -s .    
+            az storage blob upload-batch --account-name mtgcommissar --auth-mode key -d '$web' -s ./dist/mtgcommissar --overwrite    
     
     - name: logout
       run: |
